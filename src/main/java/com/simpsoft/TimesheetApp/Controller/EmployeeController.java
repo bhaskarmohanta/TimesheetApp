@@ -17,11 +17,12 @@ import com.simpsoft.TimesheetApp.Repositories.EmployeeRepo;
 @RestController
 public class EmployeeController {
 
+
+	@Autowired
+	EmployeeLeaveRepo empLeaveRepo;
 	@Autowired
 	EmployeeRepo empRepo;
 	
-	@Autowired
-	EmployeeLeaveRepo empLeaveRepo;
 
 	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping("/ListEmployees")
