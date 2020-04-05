@@ -4,6 +4,9 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "timesheet_data")
@@ -13,20 +16,24 @@ public class TimesheetData {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private int emp_ref_id;
+//	@JsonFormat(pattern = "YYYY-MM-DD")
 	private Date from_date;
+//	@JsonFormat(pattern = "YYYY-MM-DD")
 	private Date to_date;
+	@JsonFormat(pattern = "DD-MMM-YYYY")
 	private String display_date;
 	private String day;
 	private int month;
-	private int session;
+	private int year;
 	private int non_working_id;
 	private int non_working_hrs;
 	private String non_working_cmnt;
 	private int total_hrs;
-	private boolean status = true;
+	@Size(max = 1000)
+	private String admin_note;
+	private int status;
 
-	@OneToMany(mappedBy = "workingDetails", cascade = { CascadeType.ALL })
-//	@ElementCollection(targetClass = WorkingDetails.class)
+	@OneToMany(mappedBy = "workingDetails", cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
 	private List<WorkingDetails> workingDetails;
 
 	public int getId() {
@@ -85,12 +92,12 @@ public class TimesheetData {
 		this.month = month;
 	}
 
-	public int getSession() {
-		return session;
+	public int getYear() {
+		return year;
 	}
 
-	public void setSession(int session) {
-		this.session = session;
+	public void setYear(int year) {
+		this.year = year;
 	}
 
 	public int getNon_working_id() {
@@ -125,11 +132,19 @@ public class TimesheetData {
 		this.total_hrs = total_hrs;
 	}
 
-	public boolean isStatus() {
+	public String getAdmin_note() {
+		return admin_note;
+	}
+
+	public void setAdmin_note(String admin_note) {
+		this.admin_note = admin_note;
+	}
+
+	public int getStatus() {
 		return status;
 	}
 
-	public void setStatus(boolean status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 
@@ -144,9 +159,9 @@ public class TimesheetData {
 	@Override
 	public String toString() {
 		return "TimesheetData [id=" + id + ", emp_ref_id=" + emp_ref_id + ", from_date=" + from_date + ", to_date="
-				+ to_date + ", display_date=" + display_date + ", day=" + day + ", month=" + month + ", session="
-				+ session + ", non_working_id=" + non_working_id + ", non_working_hrs=" + non_working_hrs
-				+ ", non_working_cmnt=" + non_working_cmnt + ", total_hrs=" + total_hrs + ", status=" + status
+				+ to_date + ", display_date=" + display_date + ", day=" + day + ", month=" + month + ", year=" + year
+				+ ", non_working_id=" + non_working_id + ", non_working_hrs=" + non_working_hrs + ", non_working_cmnt="
+				+ non_working_cmnt + ", total_hrs=" + total_hrs + ", admin_note=" + admin_note + ", status=" + status
 				+ ", workingDetails=" + workingDetails + "]";
 	}
 

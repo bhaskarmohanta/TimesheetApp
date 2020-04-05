@@ -2,6 +2,9 @@ package com.simpsoft.TimesheetApp.Models;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 @Entity
 public class WorkingDetails {
 
@@ -12,27 +15,26 @@ public class WorkingDetails {
 	private int working_hrs;
 	private String cmnt;
 	private boolean status;
-//	private int timesheet_ref_id;
 
 	@ManyToOne(cascade = CascadeType.ALL, optional = false)
 	@JoinColumn(name = "working_details_id")
 	private TimesheetData workingDetails;
-
-	public WorkingDetails() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public WorkingDetails(int id, int project_id, int working_hrs, String cmnt, boolean status,
-			TimesheetData workingDetails) {
-		super();
-		this.id = id;
-		this.project_id = project_id;
-		this.working_hrs = working_hrs;
-		this.cmnt = cmnt;
-		this.status = status;
-		this.workingDetails = workingDetails;
-	}
+//
+//	public WorkingDetails() {
+//		super();
+//		// TODO Auto-generated constructor stub
+//	}
+//
+//	public WorkingDetails(int id, int project_id, int working_hrs, String cmnt, boolean status,
+//			TimesheetData workingDetails) {
+//		super();
+//		this.id = id;
+//		this.project_id = project_id;
+//		this.working_hrs = working_hrs;
+//		this.cmnt = cmnt;
+//		this.status = status;
+//		this.workingDetails = workingDetails;
+//	}
 	
 	public int getId() {
 		return id;
@@ -73,10 +75,11 @@ public class WorkingDetails {
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
-
-//	public TimesheetData getWorkingDetails() {
-//		return workingDetails;
-//	}
+	
+	@JsonProperty(access = Access.WRITE_ONLY)
+	public TimesheetData getWorkingDetails() {
+		return workingDetails;
+	}
 
 	public void setWorkingDetails(TimesheetData workingDetails) {
 		this.workingDetails = workingDetails;
