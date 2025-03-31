@@ -8,6 +8,7 @@ class TimesheetAppApplicationTests {
 
 	@Test
 	void contextLoads() {
+		System.out.println("Context Loads Test");
 	}
 
 }
